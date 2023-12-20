@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>DottorHeart</title>
+  <script defer src="./index.js"></script>
+  <link rel="stylesheet" href="my-demo.css" />
+</head>
+
+<body>
+  <header>
+    <h2>DottorHeart</h2>
+  </header>
+  <section id="login" class="panel">
+    <div class="row">
+      <label id="labelIdP" for="select-idp">1. Select your Identity Provider: </label>
+      <select id="select-idp" name="select-idp">
+        <option value="">--Please select an Identity Provider (IdP)--</option>
+        <!-- Update the select-idp option if not using PodSpaces -->
+        <option value="https://login.inrupt.com">https://login.inrupt.com (PodSpaces)</option>
+
+      </select>
+      <button name="btnLogin" id="btnLogin">Login</button>
+    </div>
+  </section>
+
+  <div id="read" class="panel">
+    <div class="row">
+      <label id="readlabel" for="myWebID">2. Logged in with your WebID: </label>
+      <input type="text" id="myWebID" name="myWebID" size="50" disabled>
+
+      <button name="btnRead" id="btnRead">Get Pod URL(s)</button>
+    </div>
+  </div>
+
+ 
+
+  <div id="write" class="panel">
+    <br>
+    <div class="row">
+      <div>
+        <label id="podlabel" for="select-pod">a. Write to your Pod: </label>
+
+        <select id="select-pod" name="select-pod" widths: 120>
+          <option value="">--Please select your Pod--</option>
+        </select>/healthcare/heart
+      </div>
+    </div>
+    <br>
+ 
+  </div>
+  <br>
+   <div id="view" class="panel">
+    <br>
+    <div class="row">
+      <label for="listInput">Lista da visualizzare </label>
+      <input type="text" id="listInput" name="listInput" size="50" >
+      <button name="btnViewMyList" id="btnViewMyList">View List</button>
+      <div id="listContainer"></div>
+    </div>
+  </div>
+ 
+</body>
+
+</html>

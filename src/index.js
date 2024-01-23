@@ -36,11 +36,13 @@ const selectorIdP = document.querySelector("#select-idp");
 const selectorPod = document.querySelector("#select-pod");
 const buttonLogin = document.querySelector("#btnLogin");
 const buttonRead = document.querySelector("#btnRead");
+const buttonViewList = document.querySelector("#btnViewMyList");
 
 
 const labelCreateStatus = document.querySelector("#labelCreateStatus");
 
-
+buttonRead.setAttribute("disabled", "disabled");
+buttonViewList.setAttribute("disabled", "disabled");
 
 // 1a. Start Login Process. Call login() function.
 function loginToSelectedIdP() {
@@ -60,29 +62,39 @@ async function handleRedirectAfterLogin() {
 
   const session = getDefaultSession();
   if (session.info.isLoggedIn) {
-    // Update the page with the status.
     document.getElementById("myWebID").value = session.info.webId;
-
+    buttonRead.removeAttribute("disabled");
   }
 }
 
-// The example has the login redirect back to the root page.
-// The page calls this method, which, in turn, calls handleIncomingRedirect.
 handleRedirectAfterLogin();
 
 // 2. Get Pod(s) associated with the WebID
 async function getMyPods() {
   const webID = document.getElementById("myWebID").value;
-  const mypods = await getPodUrlAll(webID, { fetch: fetch });
+  const mypods = await getPodUrlAll(webID, { fetch });
 
-  // Update the page with the retrieved values.
-
+  const selectPod = document.getElementById('select-pod');
+  selectPod.innerHTML = ''; // Pulisce le opzioni precedenti
   mypods.forEach((mypod) => {
     let podOption = document.createElement("option");
     podOption.textContent = mypod;
     podOption.value = mypod;
-    selectorPod.appendChild(podOption);
+    selectPod.appendChild(podOption);
   });
+
+  // Inizializza il menu a discesa Materialize dopo aver aggiunto le opzioni
+  M.FormSelect.init(selectPod);
+
+  // Attiva/disattiva il buttonUpload in base alla selezione del Pod
+  if (selectPod.value !== null && selectPod.value !== "") {
+    buttonViewList.removeAttribute("disabled");
+  } else {
+    buttonViewList.setAttribute("disabled", "disabled");
+  }
+ 
+
+  
 }
 
 // 3. Create the Reading List
@@ -214,7 +226,6 @@ async function viewContent(resourceUrl) {
      
       cardContainer.appendChild(downloadButton);
   
-        // Aggiungi la cardContainer al listContainer
         listContainer.appendChild(cardContainer);
       });
     } catch (error) {
@@ -262,6 +273,28 @@ async function viewMyListContent() {
       console.error("Errore durante la lettura del file dal Pod:", err);
     }
   }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var modals = document.querySelectorAll('.modal');
+    M.Modal.init(modals);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggleSection = document.getElementById('toggleSection');
+    const sectionToToggle = document.getElementById('sectionToToggle');
+    const toggleIcon = document.getElementById('toggleIcon');
+  
+    toggleSection.addEventListener('click', function() {
+      // Cambia la visibilità della sezione
+      if (sectionToToggle.style.display === 'none' || sectionToToggle.style.display === '') {
+        sectionToToggle.style.display = 'block';
+        toggleIcon.textContent = 'arrow_drop_up'; // Cambia l'icona a freccia su quando la sezione è visibile
+      } else {
+        sectionToToggle.style.display = 'none';
+        toggleIcon.textContent = 'arrow_drop_down'; // Cambia l'icona a freccia giù quando la sezione è nascosta
+      }
+    });
+  });
 
   
 

@@ -4,63 +4,103 @@
 <head>
   <meta charset="utf-8">
   <title>DottorHeart</title>
-  <script defer src="./index.js"></script>
   <link rel="stylesheet" href="my-demo.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script defer src="./index.js"></script>
 </head>
 
-<body>
-  <header>
-    <h2>DottorHeart</h2>
-  </header>
-  <section id="login" class="panel">
-    <div class="row">
-      <label id="labelIdP" for="select-idp">1. Select your Identity Provider: </label>
-      <select id="select-idp" name="select-idp">
-        <option value="">--Please select an Identity Provider (IdP)--</option>
-        <!-- Update the select-idp option if not using PodSpaces -->
-        <option value="https://login.inrupt.com">https://login.inrupt.com (PodSpaces)</option>
-
-      </select>
-      <button name="btnLogin" id="btnLogin">Login</button>
+<body style="background-color: #e3f2fd;">
+  <nav style="background-color: #007BFF;">
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo" style="font-family: Bodoni;"><img src="images/e-health-favicon-white.png" width="30px" height="30px">E-Health</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light modal-trigger" href="#loginModal"><i class="material-icons">person</i></a></li>
+      </ul>
     </div>
-  </section>
+  </nav>
+  <div class="container">
+    <div class="panel col-12" style="margin:15px 0 0 0; padding:0; background-color: white;" >
+      <div class="row">
+        <div id="toggleSection" class="arrow-icon col s1 left"><i class="material-icons" id="toggleIcon" style="color: #007BFF;">arrow_drop_down</i></div>
+      </div>
 
-  <div id="read" class="panel">
-    <div class="row">
-      <label id="readlabel" for="myWebID">2. Logged in with your WebID: </label>
-      <input type="text" id="myWebID" name="myWebID" size="50" disabled>
-
-      <button name="btnRead" id="btnRead">Get Pod URL(s)</button>
+      <span id="sectionToToggle">
+        <div class="row">
+          <label class="col s6" for="myWebID">Your WebID:</label>
+          <div class="col s6">
+            <input type="text" class="form-control form-control-underline" id="myWebID" name="myWebID" size="50" disabled>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-2 center">
+            <button class="btn btn-success w-100" style="background-color: #007BFF;" name="btnRead" id="btnRead">Get Pod URL(s)</button>
+          </div>
+        </div>
+        <div class="row col-8 center">
+          <div class="col-8 center">
+            <select id="select-pod" name="select-pod">
+              <option value="" disabled selected>--Please select your Pod--</option>
+            </select>
+          </div>
+        </div>
+      </span>
+      
+      
     </div>
-  </div>
 
- 
-
-  <div id="write" class="panel">
-    <br>
-    <div class="row">
-      <div>
-        <label id="podlabel" for="select-pod">a. Write to your Pod: </label>
-
-        <select id="select-pod" name="select-pod" widths: 120>
-          <option value="">--Please select your Pod--</option>
-        </select>/healthcare/heart
+    <div class="panel col-12" style="margin:0; padding:0; background-color: white;" id="view">
+      <div class="row">
+        <div class="input-field col s6">
+          <input id="listInput" type="text" class="validate">
+          <label for="listInput">List to show:</label>
+          <button  class="btn btn-primary"  style="background-color: #007BFF;margin:0 0 15px 0;" name="btnViewMyList" id="btnViewMyList">View List</button>
+        </div>
       </div>
     </div>
-    <br>
- 
-  </div>
-  <br>
-   <div id="view" class="panel">
-    <br>
-    <div class="row">
-      <label for="listInput">Lista da visualizzare </label>
-      <input type="text" id="listInput" name="listInput" size="50" >
-      <button name="btnViewMyList" id="btnViewMyList">View List</button>
-      <div id="listContainer"></div>
+
+     <!-- Modal Structure -->
+     <div id="loginModal" class="col s6 modal" >
+      <div class="modal-content" style="text-align: center;">
+        <h4 style="color: #007BFF;">Login</h4>
+        <p>Select your provider and log in.</p>
+      </div>
+      
+      <div style="margin:0 200px 150px 200px;">
+        <label for="select-idp" style="font-size: medium; color: black;">Select Provider:</label>
+        <select class="browser-default" id="select-idp" name="select-idp">
+          <option value="" disabled selected>--Please select an Identity Provider (IdP)--</option>
+          <!-- Update the select-idp option if not using PodSpaces -->
+          <option value="https://login.inrupt.com">https://login.inrupt.com (PodSpaces)</option>
+        </select>
+      </div>
+      <div class="modal-footer" style="background-color: #007BFF;">
+        <a href="#!" id="btnLogin" class="modal-close waves-effect waves-green btn-flat" style="color: white;">Login</a>
+      </div>
     </div>
   </div>
+
+  <footer class="page-footer" style="background-color: #007BFF;">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">E-Health Doctor</h5>
+          <p class="grey-text text-lighten-4">You can use E-Health Doctor to receive documents from your patients.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      © 2014 E-Health Copyright
+      </div>
+    </div>
+  </footer>
  
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
